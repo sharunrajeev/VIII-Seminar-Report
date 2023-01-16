@@ -1,5 +1,5 @@
 \chapter{
-    \textbf{PROPOSED METHODOLOGY}
+    \textbf{Proposed Methodology}
 }
 The proposed methodology consists of two phases:
 \begin{enumerate}
@@ -10,23 +10,25 @@ The proposed methodology consists of two phases:
 \justifying{
     \large{
         \paragraph{} In the literature, it was preferred to select several frames instead of hiding the secret data in the overall video file. Hence, an efficient frame selection algorithm was necessary. Therefore, a new frame selection algorithm was proposed based on Vigenere encryption enhanced with the Fibonacci sequence. This algorithm ensures that frame selection is performed in completely irregular order. The given equation is used to select the frames:
-        \begin{equation}\label{4.1}
-            s(i) = a(i) + (i - 1) + key
+        \begin{equation}
+            s (i) = a (i) + (i - 1) + key
         \end{equation}
+        \\[1\baselineskip]
         \begin{conditions}
-            i & 1, 2, 3, 4, ..., n\\
-            s(i) & selected frames\\
-            a(i) & relevant element of the initial value used for encryption (ith Fibonacci number)\\
+            i & 1, 2, 3, 4,\dots, n\\
+            s (i) & selected frames\\
+            a (i) & relevant element of the initial value used for encryption (ith Fibonacci number)\\
             key & decimal equivalent of n-bit number selected for system security
         \end{conditions}
-        \paragraph{} An experiment was conducted to determine the preferable video frame size and key value. The table given below summarises the performed analysis.\\[2\baselineskip]
-        \begin{table}
-            \begin{tabular}{ |c|c|c|c|c|c|c| }
+        \paragraph{} An experiment was conducted to determine the preferable video frame size and key value. The table given below summarises the performed analysis.
+        \begin{table}[h]
+            \centering
+            \begin{tabular}{ | c | c | c | c | c | c | c | }
                 \hline
                 \multirow{2}{*}{Video Frame Size} &
                     \multicolumn{6}{c|}{Key}\\
                 \cline{2-7}
-                & $(1)_2$ & $(11)_2$ & $(111)_2$ & $(1111)_2$ & $(11111)_2$ & $(111111)_2$\\
+                & ${(1)}_2$ & ${(11)}_2$ & ${(111)}_2$ & ${(1111)}_2$ & ${(11111)}_2$ & ${(111111)}_2$\\ [0.5ex]
                 \hline
                 30 & 7 & 7 & 6 & 5 & 0 & 0\\
                 \hline
@@ -66,7 +68,7 @@ The proposed methodology consists of two phases:
         \end{conditions}
         \paragraph{} Threshold is calculated as half of the maximum penalty score. The equations used for the calculation of threshold are given below:
         \begin{equation}
-            Threshold = [P_{max} / 2]
+            Threshold = [P_{\max} / 2]
         \end{equation}
         \paragraph{} If the penalty score is higher than the threshold, the secret data is inverted, otherwise, the secret data is embedded in the pixel binary as such. Compared to the classical LSB332 method, adaptive LSB332 ensures that maximum five bits are changed in the embedding of eight-bit data and hence, stego frame pixels remain very similar to cover frame pixels.
         \begin{equation}
@@ -88,8 +90,8 @@ The proposed methodology consists of two phases:
         S_B = [\frac{C_R}{2^C}] * 2^C + (b_6 * 2^0 + b_7 * 2^1)
     \end{equation}
     \begin{conditions}
-        CR , CG , CB & pixel values in the cover frame\\
-        SR , SG , SB & new pixel values in the stego frame
+        CR, CG, CB & pixel values in the cover frame\\
+        SR, SG, SB & new pixel values in the stego frame
     \end{conditions}
 }
 \section{Data Extraction}
@@ -97,7 +99,7 @@ The proposed methodology consists of two phases:
     \large{
         \paragraph{} When the stego video is received at the receiver side, similar operations used in the embedding process are applied to extract the secret data. The key used in the frame selection process is used to find the selected frames and data is extracted according to the LSB332 method. If the extracted data is meaningless, it is inverted. The equations for the data extraction process are as follows:
         \begin{equation}
-            ( C_R, C_G, C_B ) = (( S_R - ([\frac{S_R}{S^A}]*2^A)), ( S_G - ([\frac{S_G}{S^B}]*2^B)), ( S_B - ([\frac{S_B}{S^C}]*2^C))
+            ( C_R, C_G, C_B ) = (( S_R - ([\frac{S_R}{S^A}]*2^A)), ( S_G - ([\frac{S_G}{S^B}]*2^B)), ( S_B - ([\frac{S_B}{S^C}]*2^C)))
         \end{equation}
         \begin{equation}
             ( C_R, C_G, C_B ) = \begin{dcases}

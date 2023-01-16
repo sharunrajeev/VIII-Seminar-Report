@@ -1,0 +1,191 @@
+\documentclass[a4paper,oneside,10pt]{report}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+% To create enumerated lists
+\usepackage{enumerate}
+% To load subfiles
+\usepackage{subfiles}
+\usepackage{xcolor}
+% For formating curly braces for multi line assignment operation
+\usepackage{mathtools}
+% Remove numbering equation with chapter number
+\usepackage{chngcntr}
+\counterwithout{equation}{chapter}
+% For Multiple Rows in Table
+\usepackage{multirow}
+% For Conditions of equation
+\usepackage{array,tabularx,calc}
+\newlength{\conditionwd}
+\newenvironment{conditions}[1][where:]
+  {%
+   #1\tabularx{\textwidth-\widthof{#1}}[t]{
+     >{$}l<{$} @{${}={}$} X@{}
+   }%
+  }
+  {\endtabularx\\[\belowdisplayskip]}
+% For Allignment
+\usepackage{ragged2e}
+% For images
+\usepackage{graphicx}
+\graphicspath{{images}}
+\pagestyle{empty}
+\usepackage{amsmath}
+\usepackage[top=1in, bottom=1in, left=1.5in, right=1in]{geometry}
+
+\title{SEMINAR REPORT}
+\author{SHARUN E RAJEEV}
+\date{January 2023}
+
+\begin{document}
+    %-------------------First page------------------
+    \begin{titlepage}
+    \hspace{0pt}
+    \vfill
+        \centering{
+            \large{
+                \Large \textit{SEMINAR REPORT \\ on} \\[2\baselineskip]
+                \Large{\bfseries EFFICIENT DATA HIDING METHOD FOR VIDEOS BASED ON ADAPTIVE INVERTED LSB332 AND SECURE FRAME SELECTION WITH ENHANCED VIGENERE CIPHER}
+                \\[3\baselineskip]
+            }
+            \large{
+                \bfseries{
+                    Submitted by\\
+                    \Large SHARUN E RAJEEV (20219078)
+                }\\[3\baselineskip]
+            }
+            In partial fulfillment of the requirements for the award of Degree \linebreak of Bachelor of Technology \\
+            in Computer Science and Engineering. \\[2\baselineskip]
+            \includegraphics[scale=1] {cusat_logo.png} \\[2\baselineskip]
+            \large{
+                \bfseries DIVISION OF COMPUTER SCIENCE AND ENGINEERING 
+                    \linebreak SCHOOL OF ENGINEERING 
+                    \linebreak COCHIN UNIVERSITY OF SCIENCE AND TECHNOLOGY
+            }
+        }
+    \hspace{0pt}
+    \vfill
+    \end{titlepage}
+    %--------------------End of First page------------------
+    \pagebreak
+    %-------------------Second page------------------
+    \thispagestyle{empty}
+    \hspace{0pt}
+    \vfill
+    \centering{
+        \large \textbf{ 
+            DIVISION OF COMPUTER SCIENCE AND ENGINEERING
+            \linebreak SCHOOL OF ENGINEERING
+            \linebreak COCHIN UNIVERSITY OF SCIENCE AND TECHNOLOGY
+    }}\\[3\baselineskip]
+    {\huge \textbf{CERTIFICATE}} \\[3\baselineskip]
+    Certified that this a bonafide record of the Seminar Report titled
+    \\[3\baselineskip]
+    \Large{
+        \bfseries EFFICIENT DATA HIDING METHOD FOR VIDEOS BASED ON ADAPTIVE INVERTED LSB332 AND SECURE FRAME SELECTION WITH ENHANCED VIGENERE CIPHER \\[2\baselineskip]
+    }
+    \large{
+        Done by \\
+        \bfseries{
+            SHARUN E RAJEEV (20219078) \\[3\baselineskip]
+        }
+    }
+    \normalsize of VIII Semester, Computer Science and Engineering in the year 2023 in partial fulfillment requirements for the award of Degree of Bachelor of Technology in Computer Science and Engineering of Cochin University of Science and Technology. \\[6\baselineskip]
+    \begin{center}
+        \begin{tabular}{c c c}
+            Dr.Sudheep Elayidom M & Ms.Jithi P V \& Ms.Fameela K A & Ms.Fameela K A \\
+            \\[6\baselineskip]
+            Head of Division & Project Coordinator & Project Guide
+        \end{tabular}
+    \hspace{0pt}
+    \vfill
+    \end{center}
+    
+    %--------------------End of Second page------------------
+    \pagebreak
+    %-------------------Third page------------------
+    \centering
+        \LARGE 
+            \textbf{DECLARATION}
+    \\[2\baselineskip]
+    \justifying{
+        \large{
+            \paragraph{} I undersigned hereby declare that this seminar report is the record of authentic work carried out by us during the academic year 2022 \- 2023 and has not been submitted to any other University or institute towards the award of any degree.
+            \paragraph{} This submission represents my ideas in my own words and from other sources that have been adequately and accurately cited and referenced. I also declare that I have adhered to ethics of academic honesty and integrity and have not misrepresented or fabricated any data or idea or fact or source in my submission.
+            \paragraph{} I understand that any violation of the above will be a cause for disciplinary action by the Institute and/or the University and can also evoke penal action from the sources which have thus not been properly cited or from whom proper permission has not been obtained.
+            \paragraph{}
+        }
+    }
+    %--------------------End of Third page------------------
+    \clearpage
+    %--------------------Fourth page------------------
+    \centering
+        \LARGE 
+            \textbf{ACKNOWLEDGEMENT}
+    \\[2\baselineskip]
+    \justifying{
+        \large{
+            \paragraph{} I take this opportunity to express my deep sense of gratitude to the Almighty and sincere thanks to all who helped me to complete the seminar successfully.
+            \paragraph{} I am extremely grateful to \textbf{Dr.Sudheep Elayidom}, Head of Department, Department of Computer Science and Engineering, \textbf{Ms.Jithi P V and Ms.Fameela K A}, Seminar Coordinators and \textbf{Ms.Fameela K A} Seminar Guide for their constructive guidance, advice, constant support and technical guidance provided throughout the preparation of this seminar. Without their intellectual support and appropriate suggestions at the perfect time, this seminar would not have been possible.
+            \paragraph{} I extend my immense gratitude to all faculties and technical staff in the Department of Computer Science and Engineering, for their help and necessary facilities to complete the seminar. My humble gratitude and heartiest thanks also go to my parents and friends, who have supported and helped me on the course of this work.
+            \paragraph{}
+        }
+    }
+    %--------------------End of Fourth page------------------
+    \clearpage
+    \pagebreak
+    %--------------------Fifth page------------------
+    \centering{
+        \LARGE 
+            \textbf{ABSTRACT}
+    } \\
+    \justifying{
+        \large{
+            \paragraph{} The amount of data being generated and collected in the modern world is significantly increasing day by day. As the popularity of the internet and social networks is also rising, large data has been sent all over the world without considering their security level. As a result, the importance of information security has also increased and steganography has emerged as one of the standards for secure communication. 
+            \paragraph{} Digital steganography is the practice of representing information within a multimedia file such as text, picture or video, in such a manner that the presence of the information is not evident to third parties. Although image steganography has been used extensively in the past years, video steganography has also become widely popular and preferred recently, due to its high data hiding capacity and robustness. However, many of the existing methods of video steganography suffer deterioration of visual quality when the embedding capacity is increased. In order to avoid this, the proposed method uses enhanced Vigenere cipher for frame selection, which significantly improves the level of security without using complex operations, and adaptive inverted LSB332 for data hiding, which embeds video files with high capacity, high peak signal-to-noise ratio (PSNR) and high structural similarity index measure (SSIM). The experimental results show that the proposed method achieves over 65 dB PSNR and 0.99 SSIM values at 20 kbits data capacity. It has also achieved nearly 55 dB and 50 dB PSNR values at 200 kbits and 500 kbits data capacities, respectively, without appreciable loss in the SSIM value. Hence, as the embedding capacity increases, the proposed method is found to be much better in terms of visual quality, than existing video data hiding methods.
+            \paragraph{} 
+        }
+    }
+    %--------------------End of Fifth page------------------
+    \clearpage
+    %--------------------Table of Contents page------------------
+    \large \tableofcontents % adds Index Page
+    %--------------------End of Table of Contents page------------------
+    \pagebreak
+    %--------------------List of figures page------------------
+    \large \listoffigures % adds table of figures in the document
+    %--------------------End of List of figures page------------------
+    \pagebreak
+    %--------------------List of Tables page------------------
+    \large \listoftables % adds table of figures in the document
+    %--------------------End of List of Tables page------------------
+    \pagebreak
+    %--------------------Problem Statement page------------------
+    \subfile{chapters/problem_statement}
+    %--------------------End of Problem Statement page------------------
+    \pagebreak
+    %--------------------Objectives page------------------
+    \subfile{chapters/objectives}
+    %--------------------End of Objectives page------------------
+    \pagebreak
+    %--------------------Introduction------------------
+    \subfile{chapters/introduction}
+    %--------------------End of Introduction------------------
+    \pagebreak
+    %--------------------Proposed Methodology------------------
+    \subfile{chapters/proposed_methodology}
+    %--------------------End of Proposed Methodology------------------
+    \pagebreak
+    %--------------------Proposed Experimental Results------------------
+    \subfile{chapters/experimental_results}
+    %--------------------End of Proposed Experimental Results------------------
+    \pagebreak
+    %--------------------Conclusion------------------
+    \subfile{chapters/conclusion}
+    %--------------------End of Conclusion------------------
+    \pagebreak
+    %--------------------References------------------
+    \subfile{chapters/references}
+    %--------------------End of References------------------
+    
+\end{document}

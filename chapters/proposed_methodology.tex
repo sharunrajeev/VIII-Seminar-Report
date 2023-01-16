@@ -1,0 +1,109 @@
+\chapter{
+    \textbf{PROPOSED METHODOLOGY}
+}
+The proposed methodology consists of two phases:
+\begin{enumerate}
+    \item Frame Selection (using Enhanced Vigenere)
+    \item Data Hiding (using Adaptive Inverted LSB332)
+\end{enumerate}
+\section{Frame Selection}
+\justifying{
+    \large{
+        \paragraph{} In the literature, it was preferred to select several frames instead of hiding the secret data in the overall video file. Hence, an efficient frame selection algorithm was necessary. Therefore, a new frame selection algorithm was proposed based on Vigenere encryption enhanced with the Fibonacci sequence. This algorithm ensures that frame selection is performed in completely irregular order. The given equation is used to select the frames:
+        \begin{equation}\label{4.1}
+            s(i) = a(i) + (i - 1) + key
+        \end{equation}
+        \begin{conditions}
+            i & 1, 2, 3, 4, ..., n\\
+            s(i) & selected frames\\
+            a(i) & relevant element of the initial value used for encryption (ith Fibonacci number)\\
+            key & decimal equivalent of n-bit number selected for system security
+        \end{conditions}
+        \paragraph{} An experiment was conducted to determine the preferable video frame size and key value. The table given below summarises the performed analysis.\\[2\baselineskip]
+        \begin{table}
+            \begin{tabular}{ |c|c|c|c|c|c|c| }
+                \hline
+                \multirow{2}{*}{Video Frame Size} &
+                    \multicolumn{6}{c|}{Key}\\
+                \cline{2-7}
+                & $(1)_2$ & $(11)_2$ & $(111)_2$ & $(1111)_2$ & $(11111)_2$ & $(111111)_2$\\
+                \hline
+                30 & 7 & 7 & 6 & 5 & 0 & 0\\
+                \hline
+                50 & 8 & 8 & 8 & 7 & 6 & 0\\
+                \hline
+                100 & 10 & 9 & 9 & 9 & 9 & 7\\
+                \hline
+            \end{tabular}
+            \caption{\label{Table1}Maximum number of selected frames according to key value.}
+        \end{table}
+        \paragraph{} From the table, it is clear that as video frame size increases, the number of selected frames also increases but this can also negatively affect the security of secret data. It is also observed that for videos of the same length, the number of selected frames decreases gradually at large key values. Hence, for 8-bit secret data, a three-bit key is found to be more efficient.
+    }
+}
+\section{Data Hiding}
+\justifying{
+    \large{
+        \paragraph{} The classical LSB332 method embeds 8-bit secret data into the RGB channel of the selected pixel such that three bits are embedded in the LSB of the red channel, three in the green channel and two in the blue channel. A modified version of this method is proposed, called adaptive inverted LSB332, which is based on a \textit{penalty score} and a \textit{threshold value}.
+        \paragraph{} Penalty score is calculated based on the relationship between the secret data and the pixel values. The equations used for the calculation of penalty score are given below:
+        \begin{equation}
+            P = P_R + P_G + P_B
+        \end{equation}
+        \begin{equation}
+            P_R = \sum_{i=0}^{(A-1)}{(b_i \oplus R_i) * 2^i}
+        \end{equation}
+        \begin{equation}
+            P_G = \sum_{i=0}^{(B-1)}{(b_(i+A) \oplus R_i) * 2^i}
+        \end{equation}
+        \begin{equation}
+            P_B = \sum_{i=0}^{(C-1)}{(b_(i+A+B) \oplus R_i) * 2^i}
+        \end{equation}
+        \begin{conditions}
+            P & total penalty score\\
+            P_R, P_G, P_B & penalty score obtained from red, blue and green\\
+            A, B, C & number of bits to be changed in the colour channels\\
+            b & Eight bit binary secret data\\
+            R_i, B_i, G_i & corresponding bits in the colour channels\\
+        \end{conditions}
+        \paragraph{} Threshold is calculated as half of the maximum penalty score. The equations used for the calculation of threshold are given below:
+        \begin{equation}
+            Threshold = [P_{max} / 2]
+        \end{equation}
+        \paragraph{} If the penalty score is higher than the threshold, the secret data is inverted, otherwise, the secret data is embedded in the pixel binary as such. Compared to the classical LSB332 method, adaptive LSB332 ensures that maximum five bits are changed in the embedding of eight-bit data and hence, stego frame pixels remain very similar to cover frame pixels.
+        \begin{equation}
+            b = \begin{dcases}
+                255-b, \to P >= Threshold\\
+                b, \to P < Threshold
+            \end{dcases}
+        \end{equation}
+        
+        \paragraph{} The final equations of the embedding process are given below:
+    }
+    \begin{equation}
+        S_R = [\frac{C_R}{2^A}] * 2^A + (b_0 * 2^0 + b_1 * 2^1 + b_2 * 2^2)
+    \end{equation}
+    \begin{equation}
+        S_G = [\frac{C_R}{2^B}] * 2^B + (b_3 * 2^0 + b_4 * 2^1 + b_5 * 2^2)
+    \end{equation}
+    \begin{equation}
+        S_B = [\frac{C_R}{2^C}] * 2^C + (b_6 * 2^0 + b_7 * 2^1)
+    \end{equation}
+    \begin{conditions}
+        CR , CG , CB & pixel values in the cover frame\\
+        SR , SG , SB & new pixel values in the stego frame
+    \end{conditions}
+}
+\section{Data Extraction}
+\justifying{
+    \large{
+        \paragraph{} When the stego video is received at the receiver side, similar operations used in the embedding process are applied to extract the secret data. The key used in the frame selection process is used to find the selected frames and data is extracted according to the LSB332 method. If the extracted data is meaningless, it is inverted. The equations for the data extraction process are as follows:
+        \begin{equation}
+            ( C_R, C_G, C_B ) = (( S_R - ([\frac{S_R}{S^A}]*2^A)), ( S_G - ([\frac{S_G}{S^B}]*2^B)), ( S_B - ([\frac{S_B}{S^C}]*2^C))
+        \end{equation}
+        \begin{equation}
+            ( C_R, C_G, C_B ) = \begin{dcases}
+                ( C_R, C_G, C_B ), if ( C_R, C_G, C_B ) < 2^{(A+B+C-1)}\\
+                inverse( C_R, C_G, C_B ), else
+            \end{dcases}
+        \end{equation}
+    }
+}

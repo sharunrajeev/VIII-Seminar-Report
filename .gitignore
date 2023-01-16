@@ -1,0 +1,9 @@
+# Remove compile files
+*.aux
+*.fdb_latexmk
+*.fls
+*.synctex.gz
+*.lof
+*.log
+*.lot
+*.toc
